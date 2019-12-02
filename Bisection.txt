@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define EPS 0.05
+#define F(x) x*x - 4*x - 10
+
+int main()
+{
+    double x1,x2,x0,f0,f1,f2;
+    int itr=1;
+    printf("Enter 1st interval: ");
+    scanf("%lf", &x1);
+    printf("Enter 2nd interval: ");
+    scanf("%lf", &x2);
+    printf("\nitr\tx1\t\tx2\t\tx0\t\tF(x0)");
+
+    while((fabs((x2-x1)/2.0)>EPS))
+        {
+
+        f1=F(x1);
+        f2=F(x2);
+
+        x0=(x1+x2)/2.0;
+        if(f1*f2>0)
+        {
+            printf("\nThere is no root in the search bracket");
+            break;
+        }
+        printf("\n%d\t%lf\t%lf\t%lf\t%lf",itr,x1,x2,x0,f0);
+        itr++;
+
+        f0=F(x0);
+
+
+        if((f0*f1)<0.0)
+            x2=x0;
+        else if((f0*f2)<0.0)
+            x1=x0;
+    }
+    printf("\n\nThe root is %lf\n",(x1+x2)/2);
+
+    return 0;
+}

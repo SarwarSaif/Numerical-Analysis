@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+int max_p,i=0;
+int coef[10]= {0};
+double fx1=0,fx2=0;
+#define E 0.00001
+
+int main()
+{
+    printf("Enter the max power of the equation: ");
+    scanf("%d",&max_p);
+
+    for(i=0; i<=max_p; i++)
+    {
+        printf("Enter the coef for x^%d: ",i);
+        scanf("%d",&coef[i]);
+    }
+
+    printf("\n\tTHE POLYNOMIAL IS = ");
+    for(i=max_p; i>=0; i--) /*printing coefficients*/
+    {
+        printf(" %dx^%d",coef[i],i);
+    }
+
+    float x1,x2,x3,root;
+    printf("Enter the 1st intial point: ");
+    scanf("%f", &x1);
+    printf("Enter the 2nd initial point: ");
+    scanf("%f", &x2);
+    do
+    {
+        fx1=0,fx2=0;
+        for(i=max_p; i>=1; i--)
+        {
+            fx1+=coef[i] * (pow(x1,i)) ;
+        }
+        fx1+=coef[0];
+        printf("\nfx1= %f",x1);
+        for(i=max_p; i>=1; i--)
+        {
+            fx2+=coef[i]*(pow(x2,i));
+        }
+        fx2+=coef[0];
+        printf("fx2= %f\n",x2);
+        x3=(fx2*x1-fx1*x2)/(fx2-fx1);
+
+        if((fabs((x3-x2)/x3))<E)
+            break;
+        else{
+        x1=x2;
+        x2=x3;
+
+        }
+
+    }
+    while(1);
+printf("\nThe root is %f\n",x3);
+
+    return 0;
+}

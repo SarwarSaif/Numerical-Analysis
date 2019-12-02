@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+ 
+using namespace std;
+int coef[10]={0};
+int max_power;
+double fx(double x0)
+{
+    double fx1 = 0;
+    for(int i=max_power;i>=1;i--)
+    {
+        fx1+=coef[i] * (pow(x0,i)) ;
+    }
+    fx1+=coef[0];
+    return fx1;
+}
+double fdx(double x0)
+{
+    double fdx1 = 0;
+    for(int i=max_power;i>0;i--)
+    {
+        fdx1+=coef[i]* (i*pow(x0,(i-1)));
+    }
+    return fdx1;
+}
+
+int main()
+{
+ 
+    double temp,x1,x2;
+    int i;
+    printf("ENTER THE MAXIMUM POWER OF X = ");
+    scanf("%d",&max_power);
+ 
+    for(i=0;i<=max_power;i++)
+    {
+        printf("\nx^%d = ",i);
+        scanf("%d",&coef[i]);
+    }
+ 
+    printf("\nFirst approximation x1 ----> ");
+    scanf("%lf",&x1);
+    do
+    {
+            x2=x1-(fx(x1)/fdx(x1));
+            temp = x1;
+            x1 = x2;
+    }while((fabs(x2 - temp)/x2)>=0.0001);
+ 
+    printf("\nTHE ROOT OF EQUATION IS = %lf",x2);
+    return 0;
+}

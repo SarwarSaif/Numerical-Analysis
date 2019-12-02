@@ -1,0 +1,113 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n;
+double coef[100];
+double fx(double valX){
+	
+    double fx1 = 0;
+    for(int i=n;i>=1;i--)
+    {
+        fx1+=coef[i] * (pow(valX,i)) ;
+        //cout<<"co = "<<coef[i]<<endl;
+        //cout<<"fx1 = "<<fx1<<endl;
+    }
+    fx1+=coef[0];
+    //cout<<"try "<<n<<" "<<fx1<<endl;
+    return fx1;
+
+	
+}
+
+double fdx(double x0)
+{
+    double fdx1 = 0;
+    for(int i=n;i>=1;i--)
+    {
+        fdx1+=coef[i]* (i*pow(x0,(i-1)));
+        //cout<<"TRY Baal"<<n<<" "<<fdx1<<endl;
+    }
+    //cout<<"TRY "<<n<<" "<<fdx1<<endl;
+    return fdx1;
+}
+
+double NewtonRaphson(double x1){
+	double x2,temp;
+	do
+    {
+    	
+            x2=x1-(fx(x1)/fdx(x1));
+            temp = x1;
+            x1 = x2;
+            //cout<<"value of X2 "<<x2<<endl;
+    }while((fabs(x2 - temp)/x2)>=0.0001);
+    return x2;
+}
+
+void synthetic(double Xr){
+	int b[n];
+	b[n]=0;
+	for(int i=n-1;i>=0;i--)
+    {
+        b[i]=coef[i+1]+(Xr*b[i+1]) ;
+    }
+    for(int i=n-1;i>=0;i--)
+    {
+        coef[i]=b[i];
+        //cout<<"new COEF of "<<n<<"  "<<coef[i]<<endl;
+    }
+    n--;
+	
+}
+
+int main(){
+	
+	double root[100],est,error,xr;
+	//double temp,x1,x2;
+    int i;
+    printf("ENTER THE MAXIMUM POWER OF X = ");
+    scanf("%d",&n);
+    int flag=n;
+    for(i=0;i<=n;i++)
+    {
+        printf("\nx^%d = ",i);
+        cin>>coef[i];
+    }
+    cout<<"enter estimated value : ";
+    cin>>est;
+    cout<<endl<<"Enter error ";
+    cin>>error;
+    cout<<endl;
+    do{
+    	
+    	xr=NewtonRaphson(est);
+    	cout<<xr<<endl;
+    	root[n]=xr;
+            
+    	synthetic(xr);
+    	est=xr;
+    	
+    	
+	}while(n>1);
+	root[1]=-(coef[0]/coef[1]);
+	for(int j=1;j<=flag;j++){
+		cout<<"Root "<<j<<" : "<<root[j]<<endl;
+	}
+	
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
